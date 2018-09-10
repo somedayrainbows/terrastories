@@ -10,8 +10,6 @@ class StoryDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     point: Field::BelongsTo,
     speaker: Field::BelongsTo,
-    media_attachments: Field::HasMany.with_options(class_name: "ActiveStorage::Attachment"),
-    media_blobs: Field::HasMany.with_options(class_name: "ActiveStorage::Blob"),
     taggings: Field::HasMany.with_options(class_name: "::ActsAsTaggableOn::Tagging"),
     base_tags: Field::HasMany.with_options(class_name: "::ActsAsTaggableOn::Tag"),
     tag_taggings: Field::HasMany.with_options(class_name: "ActsAsTaggableOn::Tagging"),
@@ -19,6 +17,7 @@ class StoryDashboard < Administrate::BaseDashboard
     id: Field::Number,
     title: Field::String,
     desc: Field::Text,
+    permission_level: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -29,10 +28,11 @@ class StoryDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
+    :title,
+    :desc,
+    :permission_level,
     :point,
     :speaker,
-    :media_attachments,
-    :media_blobs,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -40,8 +40,6 @@ class StoryDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :point,
     :speaker,
-    :media_attachments,
-    :media_blobs,
     :taggings,
     :base_tags,
     :tag_taggings,
@@ -59,14 +57,13 @@ class StoryDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :point,
     :speaker,
-    :media_attachments,
-    :media_blobs,
     :taggings,
     :base_tags,
     :tag_taggings,
     :tags,
     :title,
     :desc,
+    :permission_level,
   ].freeze
 
   # Overwrite this method to customize how stories are displayed

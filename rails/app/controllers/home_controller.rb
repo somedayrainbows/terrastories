@@ -12,8 +12,8 @@ class HomeController < ApplicationController
     # save the story to the database
   end
 
-  helper_method def stories
-    Story.all.includes(:point, :media_attachments)
-    # [Story.new(title: 'Story Title', desc: 'Description')] * 4
+  def stories
+    policy_scope(Story)
   end
+  helper_method :stories
 end
