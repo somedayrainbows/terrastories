@@ -9,7 +9,7 @@ class StoryPolicy
 
         def resolve
             stories = Story.all
-            stories.reject { |story| story.permission_level == 'editor' } unless user.role == 'editor'
+            stories.reject { |story| story.permission_level == 'editor' } unless user.editor?
             stories
         end
     end
